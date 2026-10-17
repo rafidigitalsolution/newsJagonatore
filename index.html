@@ -688,8 +688,8 @@
                 <div class="control-section" id="news-frame-selector-section">
                     <div class="control-title"><i class="fa-solid fa-palette"></i> ফ্রেম সিলেক্ট করুন</div>
                     <div class="control-panel" style="grid-template-columns: repeat(2, 1fr);">
-                        <button class="ctrl-btn active-frame" id="frame-btn-1" onclick="setNewsFrame(1)">ফ্রেম ১ (অরিজিনাল)</button>
-                        <button class="ctrl-btn" id="frame-btn-2" onclick="setNewsFrame(2)">ফ্রেম ২ (ইন্টারন্যাশনাল থিম)</button>
+                        <button class="ctrl-btn active-frame" id="frame-btn-1" onclick="setNewsFrame(1)">ফ্রেম-১</button>
+                        <button class="ctrl-btn" id="frame-btn-2" onclick="setNewsFrame(2)">ফ্রেম-২</button>
                     </div>
                 </div>
 
@@ -875,7 +875,7 @@
         
         let imgState = { x: 0, y: 0, scale: 1.0 };
 
-        // Updated Frame 1 image URL
+        // Frame 1 image URL
         newsFrameImage.crossOrigin = "anonymous";
         newsFrameImage.src = "https://i.postimg.cc/gJzfWXGm/Pixellab-ST-20261017-203721.png";
         newsFrameImage.onload = () => { newsFrameLoaded = true; };
@@ -907,7 +907,7 @@
         setupDropZone('op-drop-zone', 'op-img-input', 'op-drop-text');
         setupDropZone('daily-drop-zone', 'daily-img-input', 'daily-drop-text');
 
-        // Collage specific drop zone handlers
+        // Collage drop zone handlers
         const setupCollageDropZones = () => {
             const z1 = document.getElementById('collage-drop-zone-1');
             const i1 = document.getElementById('collage-img-input-1');
@@ -1113,7 +1113,7 @@
             }
         }
 
-        // Professional TV News Split-Screen Collage Template
+        // Fixed Professional TV News Split-Screen Collage Template
         function generateCollagePhotocard() {
             const canvas = document.getElementById('photocard-canvas');
             const ctx = canvas.getContext('2d');
@@ -1121,47 +1121,53 @@
             canvas.height = 2700;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Background / Base
+            // Background Base
             ctx.fillStyle = '#0f172a';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+            // Photos positioning (Frame 1 photo area is Y = 980px to 2500px)
+            const boxY = 980;
+            const boxH = 1520;
+            const boxW = 970;
+            const gap = 40;
+            const box1X = 90;
+            const box2X = box1X + boxW + gap; // 1100
+
             // Draw Photo 1 (Left Box)
             if (img1Loaded && userImage1.complete) {
-                const boxX = 70, boxY = 280, boxW = 980, boxH = 1320;
                 ctx.save();
                 ctx.beginPath();
-                roundRect(ctx, boxX, boxY, boxW, boxH, 24, false, false);
+                roundRect(ctx, box1X, boxY, boxW, boxH, 20, false, false);
                 ctx.clip();
-                drawImageCover(ctx, userImage1, boxX, boxY, boxW, boxH);
+                drawImageCover(ctx, userImage1, box1X, boxY, boxW, boxH);
                 ctx.restore();
 
                 // Photo Border
                 ctx.save();
                 ctx.strokeStyle = '#38bdf8';
                 ctx.lineWidth = 6;
-                roundRect(ctx, boxX, boxY, boxW, boxH, 24, false, true);
+                roundRect(ctx, box1X, boxY, boxW, boxH, 20, false, true);
                 ctx.restore();
             }
 
             // Draw Photo 2 (Right Box)
             if (img2Loaded && userImage2.complete) {
-                const boxX = 1110, boxY = 280, boxW = 980, boxH = 1320;
                 ctx.save();
                 ctx.beginPath();
-                roundRect(ctx, boxX, boxY, boxW, boxH, 24, false, false);
+                roundRect(ctx, box2X, boxY, boxW, boxH, 20, false, false);
                 ctx.clip();
-                drawImageCover(ctx, userImage2, boxX, boxY, boxW, boxH);
+                drawImageCover(ctx, userImage2, box2X, boxY, boxW, boxH);
                 ctx.restore();
 
                 // Photo Border
                 ctx.save();
                 ctx.strokeStyle = '#fde047';
                 ctx.lineWidth = 6;
-                roundRect(ctx, boxX, boxY, boxW, boxH, 24, false, true);
+                roundRect(ctx, box2X, boxY, boxW, boxH, 20, false, true);
                 ctx.restore();
             }
 
-            // Use Frame 1 overlay on top for TV news branding (location, logo banner, header)
+            // Overlay Frame 1 PNG on top
             if(newsFrameLoaded && newsFrameImage.complete) {
                 ctx.drawImage(newsFrameImage, 0, 0, canvas.width, canvas.height);
             }
@@ -1179,10 +1185,10 @@
                 ctx.restore();
             }
 
-            // Render Headline for Collage
+            // Render Headline at Top (startYRatio = 0.22)
             const text = document.getElementById('collage-headline-input').value.trim();
             if (text.length > 0) {
-                renderCollageAutoFittingHeadline(ctx, text, canvas.width, canvas.height, 0.65);
+                renderCollageAutoFittingHeadline(ctx, text, canvas.width, canvas.height, 0.22);
             }
         }
 
@@ -1208,7 +1214,7 @@
             const words = text.split(/\s+/);
             const startY = canvasH * startYRatio;
             const maxLineWidth = canvasWidth - 280;
-            const maxAllowedHeight = canvasH * 0.22;
+            const maxAllowedHeight = canvasH * 0.17;
 
             let fontSize = userFontSize;
             let lines = [];
