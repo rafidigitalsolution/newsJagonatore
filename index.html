@@ -148,7 +148,7 @@
 
         .main-btn-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
             width: 100%;
             margin-top: 25px;
@@ -156,7 +156,7 @@
 
         .btn-big-hero {
             padding: 24px 28px;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 800;
             border: none;
             border-radius: 24px;
@@ -196,6 +196,12 @@
 
         .btn-daily-hero {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #0f3d87 100%);
+            background-size: 200% auto;
+            animation: gradientShift 5s ease infinite;
+        }
+
+        .btn-collage-hero {
+            background: linear-gradient(135deg, #059669 0%, #0d9488 50%, #0f3d87 100%);
             background-size: 200% auto;
             animation: gradientShift 5s ease infinite;
         }
@@ -251,7 +257,7 @@
         .drop-zone {
             border: 2px dashed rgba(15, 61, 135, 0.5);
             border-radius: 22px;
-            padding: 40px;
+            padding: 35px;
             text-align: center;
             background: rgba(255, 255, 255, 0.8);
             cursor: pointer;
@@ -265,7 +271,7 @@
             box-shadow: 0 10px 25px rgba(15, 61, 135, 0.12);
         }
 
-        .drop-zone i { font-size: 52px; color: var(--primary-blue); margin-bottom: 14px; }
+        .drop-zone i { font-size: 48px; color: var(--primary-blue); margin-bottom: 12px; }
 
         .input-text, .input-select {
             width: 100%;
@@ -484,6 +490,11 @@
                         <i class="fa-solid fa-cloud-sun"></i>
                         <span>প্রতিদিনের আপডেট</span>
                     </button>
+
+                    <button class="btn-big-hero btn-collage-hero" onclick="switchView('view-collage-form')">
+                        <i class="fa-solid fa-photo-film"></i>
+                        <span>মাল্টি-ফটো নিউজ</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -530,6 +541,62 @@
 
                 <button class="btn-big-hero btn-news-hero" style="width: 100%;" onclick="goToPreview()">
                     <i class="fa-solid fa-gears"></i> ফটোকার্ড তৈরি করুন
+                </button>
+            </div>
+        </div>
+
+        <!-- View 2.2: Multi-Photo Collage Form -->
+        <div id="view-collage-form" class="page-view">
+            <div class="glass-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:22px;">
+                    <button class="ctrl-btn" onclick="switchView('view-home')"><i class="fa-solid fa-arrow-left"></i> হোম</button>
+                    <h2 style="font-size: 1.5rem; font-weight: 700;">মাল্টি-ফটো কোলাজ নিউজ ফরম</h2>
+                    <div></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="collage-location-input">লোকেশন / স্থান</label>
+                    <input type="text" id="collage-location-input" class="input-text" placeholder="যেমন: নাটোর" value="নাটোর">
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px;">
+                    <div class="form-group">
+                        <label>১ম ছবি (বাম পার্শ্ব)</label>
+                        <div class="drop-zone" id="collage-drop-zone-1" onclick="document.getElementById('collage-img-input-1').click()">
+                            <i class="fa-solid fa-image"></i>
+                            <p id="collage-drop-text-1" style="font-weight: 600; font-size: 0.95rem;">১ম ছবি আপলোড করুন</p>
+                            <input type="file" id="collage-img-input-1" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>২য় ছবি (ডান পার্শ্ব)</label>
+                        <div class="drop-zone" id="collage-drop-zone-2" onclick="document.getElementById('collage-img-input-2').click()">
+                            <i class="fa-solid fa-image"></i>
+                            <p id="collage-drop-text-2" style="font-weight: 600; font-size: 0.95rem;">২য় ছবি আপলোড করুন</p>
+                            <input type="file" id="collage-img-input-2" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="collage-headline-input">সংবাদের শিরোনাম</label>
+                    <textarea id="collage-headline-input" class="input-text" rows="3" placeholder="সংবাদের শিরোনাম এখানে লিখুন..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="collage-red-word-count">প্রথম কয়টি শব্দ রঙিন হবে?</label>
+                    <select id="collage-red-word-count" class="input-select">
+                        <option value="0">০টি</option>
+                        <option value="1">১টি শব্দ</option>
+                        <option value="2">২টি শব্দ</option>
+                        <option value="3" selected>৩টি শব্দ</option>
+                        <option value="4">৪টি শব্দ</option>
+                    </select>
+                </div>
+
+                <button class="btn-big-hero btn-collage-hero" style="width: 100%;" onclick="goToCollagePreview()">
+                    <i class="fa-solid fa-photo-film"></i> কোলাজ ফটোকার্ড তৈরি করুন
                 </button>
             </div>
         </div>
@@ -635,7 +702,7 @@
                     </div>
                 </div>
 
-                <div class="control-section">
+                <div class="control-section" id="image-adjust-section">
                     <div class="control-title"><i class="fa-solid fa-image"></i> ছবির পজিশন ও জুম কন্ট্রোল</div>
                     <div class="control-panel">
                         <button class="ctrl-btn" onclick="adjustImage('zoomIn')"><i class="fa-solid fa-magnifying-glass-plus"></i> জুম ইন</button>
@@ -702,7 +769,6 @@
                     natoreWeather.minTemp = toBengaliNum(min) + '°';
                     natoreWeather.rainChance = toBengaliNum(rain) + '%';
                     
-                    // Weather Condition Mapping
                     if(code === 0) natoreWeather.condition = 'রোদেলা আকাশ';
                     else if(code >= 1 && code <= 3) natoreWeather.condition = 'আংশিক মেঘলা';
                     else if(code >= 45 && code <= 48) natoreWeather.condition = 'কুয়াশাচ্ছন্ন';
@@ -790,20 +856,28 @@
 
         let currentMode = 'news';
         let currentNewsFrameIndex = 1;
+        
         let userImage = new Image();
+        let userImage1 = new Image();
+        let userImage2 = new Image();
         
         let newsFrameImage = new Image();
         let newsFrame2Image = new Image();
         let opinionFrameImage = new Image();
 
         let imgLoaded = false;
+        let img1Loaded = false;
+        let img2Loaded = false;
+        
         let newsFrameLoaded = false;
         let newsFrame2Loaded = false;
         let opinionFrameLoaded = false;
+        
         let imgState = { x: 0, y: 0, scale: 1.0 };
 
+        // Updated Frame 1 image URL
         newsFrameImage.crossOrigin = "anonymous";
-        newsFrameImage.src = "https://i.ibb.co.com/wZrNpWbq/Pixellab-ST-20261016-211728.png";
+        newsFrameImage.src = "https://i.postimg.cc/gJzfWXGm/Pixellab-ST-20261017-203721.png";
         newsFrameImage.onload = () => { newsFrameLoaded = true; };
 
         newsFrame2Image.crossOrigin = "anonymous";
@@ -822,10 +896,10 @@
                 zone.addEventListener(evt, e => e.preventDefault(), false);
             });
             zone.addEventListener('drop', (e) => {
-                if(e.dataTransfer.files.length > 0) handleFiles(e.dataTransfer.files[0], textId);
+                if(e.dataTransfer.files.length > 0) handleFiles(e.dataTransfer.files[0], textId, 1);
             });
             input.addEventListener('change', (e) => {
-                if(e.target.files.length > 0) handleFiles(e.target.files[0], textId);
+                if(e.target.files.length > 0) handleFiles(e.target.files[0], textId, 1);
             });
         };
 
@@ -833,7 +907,25 @@
         setupDropZone('op-drop-zone', 'op-img-input', 'op-drop-text');
         setupDropZone('daily-drop-zone', 'daily-img-input', 'daily-drop-text');
 
-        function handleFiles(file, textId) {
+        // Collage specific drop zone handlers
+        const setupCollageDropZones = () => {
+            const z1 = document.getElementById('collage-drop-zone-1');
+            const i1 = document.getElementById('collage-img-input-1');
+            z1.addEventListener('click', () => i1.click());
+            i1.addEventListener('change', (e) => {
+                if(e.target.files.length > 0) handleCollageFile(e.target.files[0], 1);
+            });
+
+            const z2 = document.getElementById('collage-drop-zone-2');
+            const i2 = document.getElementById('collage-img-input-2');
+            z2.addEventListener('click', () => i2.click());
+            i2.addEventListener('change', (e) => {
+                if(e.target.files.length > 0) handleCollageFile(e.target.files[0], 2);
+            });
+        };
+        setupCollageDropZones();
+
+        function handleFiles(file, textId, targetImgNum) {
             if(!file.type.startsWith('image/')) return;
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -844,6 +936,29 @@
                     document.getElementById(textId).innerText = `সংযুক্ত ছবি: ${file.name}`;
                 };
                 userImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleCollageFile(file, imgNum) {
+            if(!file.type.startsWith('image/')) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (imgNum === 1) {
+                    userImage1 = new Image();
+                    userImage1.onload = () => {
+                        img1Loaded = true;
+                        document.getElementById('collage-drop-text-1').innerText = `১ম ছবি: ${file.name}`;
+                    };
+                    userImage1.src = e.target.result;
+                } else {
+                    userImage2 = new Image();
+                    userImage2.onload = () => {
+                        img2Loaded = true;
+                        document.getElementById('collage-drop-text-2').innerText = `২য় ছবি: ${file.name}`;
+                    };
+                    userImage2.src = e.target.result;
+                }
             };
             reader.readAsDataURL(file);
         }
@@ -861,6 +976,18 @@
             currentMode = 'news';
             document.getElementById('news-frame-selector-section').style.display = 'block';
             document.getElementById('font-slider-section').style.display = 'block';
+            document.getElementById('image-adjust-section').style.display = 'block';
+            switchView('view-preview');
+            updateCaptionHelper();
+            generatePhotocard();
+        }
+
+        function goToCollagePreview() {
+            if (!img1Loaded || !img2Loaded) { alert('অনুগ্রহ করে কোলাজের জন্য দুটি ছবিই আপলোড করুন!'); return; }
+            currentMode = 'collage';
+            document.getElementById('news-frame-selector-section').style.display = 'none';
+            document.getElementById('font-slider-section').style.display = 'block';
+            document.getElementById('image-adjust-section').style.display = 'none';
             switchView('view-preview');
             updateCaptionHelper();
             generatePhotocard();
@@ -871,6 +998,7 @@
             currentMode = 'opinion';
             document.getElementById('news-frame-selector-section').style.display = 'none';
             document.getElementById('font-slider-section').style.display = 'block';
+            document.getElementById('image-adjust-section').style.display = 'block';
             switchView('view-preview');
             updateCaptionHelper();
             generatePhotocard();
@@ -881,6 +1009,7 @@
             currentMode = 'daily';
             document.getElementById('news-frame-selector-section').style.display = 'none';
             document.getElementById('font-slider-section').style.display = 'none';
+            document.getElementById('image-adjust-section').style.display = 'none';
             switchView('view-preview');
             updateCaptionHelper();
             generatePhotocard();
@@ -888,6 +1017,7 @@
 
         function goBackToForm() {
             if (currentMode === 'news') switchView('view-form');
+            else if (currentMode === 'collage') switchView('view-collage-form');
             else if (currentMode === 'opinion') switchView('view-opinion-form');
             else switchView('view-daily-form');
         }
@@ -907,6 +1037,8 @@
         function generatePhotocard() {
             if (currentMode === 'news') {
                 generateNewsPhotocard();
+            } else if (currentMode === 'collage') {
+                generateCollagePhotocard();
             } else if (currentMode === 'opinion') {
                 generateOpinionPhotocard();
             } else {
@@ -979,6 +1111,155 @@
                 const text = document.getElementById('headline-input').value.trim();
                 if (text.length > 0) renderAutoFittingHeadline(ctx, text, canvas.width, canvas.height, 0.71);
             }
+        }
+
+        // Professional TV News Split-Screen Collage Template
+        function generateCollagePhotocard() {
+            const canvas = document.getElementById('photocard-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 2160;
+            canvas.height = 2700;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Background / Base
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Photo 1 (Left Box)
+            if (img1Loaded && userImage1.complete) {
+                const boxX = 70, boxY = 280, boxW = 980, boxH = 1320;
+                ctx.save();
+                ctx.beginPath();
+                roundRect(ctx, boxX, boxY, boxW, boxH, 24, false, false);
+                ctx.clip();
+                drawImageCover(ctx, userImage1, boxX, boxY, boxW, boxH);
+                ctx.restore();
+
+                // Photo Border
+                ctx.save();
+                ctx.strokeStyle = '#38bdf8';
+                ctx.lineWidth = 6;
+                roundRect(ctx, boxX, boxY, boxW, boxH, 24, false, true);
+                ctx.restore();
+            }
+
+            // Draw Photo 2 (Right Box)
+            if (img2Loaded && userImage2.complete) {
+                const boxX = 1110, boxY = 280, boxW = 980, boxH = 1320;
+                ctx.save();
+                ctx.beginPath();
+                roundRect(ctx, boxX, boxY, boxW, boxH, 24, false, false);
+                ctx.clip();
+                drawImageCover(ctx, userImage2, boxX, boxY, boxW, boxH);
+                ctx.restore();
+
+                // Photo Border
+                ctx.save();
+                ctx.strokeStyle = '#fde047';
+                ctx.lineWidth = 6;
+                roundRect(ctx, boxX, boxY, boxW, boxH, 24, false, true);
+                ctx.restore();
+            }
+
+            // Use Frame 1 overlay on top for TV news branding (location, logo banner, header)
+            if(newsFrameLoaded && newsFrameImage.complete) {
+                ctx.drawImage(newsFrameImage, 0, 0, canvas.width, canvas.height);
+            }
+
+            // Render Date & Location
+            renderNewsDate(ctx, canvas.width, canvas.height, '#111111');
+            
+            const locText = document.getElementById('collage-location-input').value.trim();
+            if (locText.length > 0) {
+                ctx.save();
+                ctx.font = `bold ${Math.floor(canvas.width * 0.038)}px 'Tiro Bangla', sans-serif`;
+                ctx.fillStyle = '#ffffff';
+                ctx.textAlign = 'left';
+                ctx.fillText(locText, canvas.width * 0.092, canvas.height * 0.058);
+                ctx.restore();
+            }
+
+            // Render Headline for Collage
+            const text = document.getElementById('collage-headline-input').value.trim();
+            if (text.length > 0) {
+                renderCollageAutoFittingHeadline(ctx, text, canvas.width, canvas.height, 0.65);
+            }
+        }
+
+        function drawImageCover(ctx, img, x, y, w, h) {
+            const imgRatio = img.width / img.height;
+            const targetRatio = w / h;
+            let drawW, drawH;
+            if (imgRatio > targetRatio) {
+                drawH = h;
+                drawW = drawH * imgRatio;
+            } else {
+                drawW = w;
+                drawH = drawW / imgRatio;
+            }
+            const drawX = x + (w - drawW) / 2;
+            const drawY = y + (h - drawH) / 2;
+            ctx.drawImage(img, drawX, drawY, drawW, drawH);
+        }
+
+        function renderCollageAutoFittingHeadline(ctx, text, canvasWidth, canvasH, startYRatio) {
+            const redCount = parseInt(document.getElementById('collage-red-word-count').value);
+            const userFontSize = parseInt(document.getElementById('font-size-slider').value) * 2;
+            const words = text.split(/\s+/);
+            const startY = canvasH * startYRatio;
+            const maxLineWidth = canvasWidth - 280;
+            const maxAllowedHeight = canvasH * 0.22;
+
+            let fontSize = userFontSize;
+            let lines = [];
+            let tokens = [];
+
+            words.forEach((w, idx) => {
+                tokens.push({ text: w + " ", color: (idx < redCount) ? '#fde047' : '#ffffff' });
+            });
+
+            let lineHeight = fontSize * 1.32;
+
+            while (fontSize >= 38) {
+                ctx.font = `bold ${fontSize}px 'Tiro Bangla', sans-serif`;
+                lines = [];
+                let currentLine = [];
+                let currentLineWidth = 0;
+
+                tokens.forEach(token => {
+                    let tokenWidth = ctx.measureText(token.text).width;
+                    if (currentLineWidth + tokenWidth > maxLineWidth) {
+                        lines.push(currentLine);
+                        currentLine = [token];
+                        currentLineWidth = tokenWidth;
+                    } else {
+                        currentLine.push(token);
+                        currentLineWidth += tokenWidth;
+                    }
+                });
+                if (currentLine.length > 0) lines.push(currentLine);
+
+                lineHeight = fontSize * 1.32;
+                let totalHeight = lines.length * lineHeight;
+
+                if (totalHeight <= maxAllowedHeight) break;
+                fontSize -= 4;
+            }
+
+            let currentY = startY;
+
+            lines.forEach(line => {
+                let lineWidth = 0;
+                line.forEach(t => { lineWidth += ctx.measureText(t.text).width; });
+                let drawX = (canvasWidth - lineWidth) / 2;
+
+                line.forEach(t => {
+                    ctx.fillStyle = t.color;
+                    ctx.fillText(t.text, drawX, currentY);
+                    drawX += ctx.measureText(t.text).width;
+                });
+                currentY += lineHeight;
+            });
         }
 
         function renderFrame2Date(ctx, canvasWidth, canvasH) {
@@ -1391,6 +1672,10 @@
                 const text = document.getElementById('headline-input').value.trim();
                 const loc = document.getElementById('news-location-input').value.trim();
                 caption = `[${loc}] ${text}\n\nতারিখ: ${dateStr}\nবিস্তারিত পড়তে চোখ রাখুন জাগো নাটোর-এ।\n\n#JagoNatore #NatoreNews #NewsUpdate`;
+            } else if (currentMode === 'collage') {
+                const text = document.getElementById('collage-headline-input').value.trim();
+                const loc = document.getElementById('collage-location-input').value.trim();
+                caption = `[${loc}] ${text}\n\nতারিখ: ${dateStr}\nবিশেষ সংবাদ ও ছবি। বিস্তারিত পড়তে চোখ রাখুন জাগো নাটোর-এ।\n\n#JagoNatore #NatoreNews #CollageNews`;
             } else if (currentMode === 'opinion') {
                 const name = document.getElementById('op-name').value.trim();
                 const title = document.getElementById('op-title').value.trim();
